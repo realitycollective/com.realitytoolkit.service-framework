@@ -1689,7 +1689,7 @@ namespace RealityCollective.ServiceFramework.Services
         /// <param name="profile">The profile instance.</param>
         /// <param name="rootProfile">Optional root profile reference.</param>
         /// <returns>True if a <see cref="TService"/> type is matched and a valid <see cref="TProfile"/> is found, otherwise false.</returns>
-        public bool TryGetServiceProfile<TService, TProfile>(out TProfile profile, ServiceProvidersProfile rootProfile = null)
+        public bool TryGetServiceProfile<TService, TProfile>(out TProfile profile, BaseServiceProfile<IService> rootProfile = null)
             where TService : IService
             where TProfile : BaseProfile
         {
