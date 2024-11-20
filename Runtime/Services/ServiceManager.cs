@@ -421,8 +421,7 @@ namespace RealityCollective.ServiceFramework.Services
 
             if (ActiveProfile?.ServiceConfigurations != null)
             {
-                var orderedConfig = ActiveProfile.ServiceConfigurations.OrderBy(s => s.Priority).ToArray();
-                TryRegisterServiceConfigurations(orderedConfig);
+                TryRegisterServiceConfigurations(ActiveProfile.ServiceConfigurations);
             }
 
             var activeSceneName = SceneManager.GetActiveScene().name;
@@ -779,20 +778,17 @@ namespace RealityCollective.ServiceFramework.Services
                 return true;
             }
 
-            Debug.Log($"Constructor: {primaryConstructor}");
-
             foreach (var parameter in parameters)
             {
                 if (parameter.ParameterType.IsInterface && typeof(IService).IsAssignableFrom(parameter.ParameterType))
                 {
                     if (TryGetService(parameter.ParameterType, out var dependency))
                     {
-                        Debug.Log($"Injecting {dependency.Name} into {parameter.Name}");
                         args = args.AddItem(dependency);
                     }
                     else
                     {
-                        Debug.LogError($"Failed to find an {parameter.ParameterType.Name} service to inject into {parameter.Name}!");
+                        Debug.LogError($"Failed to find an {parameter.ParameterType.Name} service to inject into parameter {parameter.Name} for service {concreteType.Name}!");
                     }
                 }
             }
