@@ -51,7 +51,11 @@ namespace RealityCollective.ServiceFramework.Editor.Packages
             else if (!string.IsNullOrEmpty(SceneManager.GetActiveScene().name))
             {
                 var activeScene = SceneManager.GetActiveScene();
+#if UNITY_2023_1_OR_NEWER
+                var serviceManager = GameObject.FindFirstObjectByType<GlobalServiceManager>();
+#else
                 var serviceManager = GameObject.FindObjectOfType<GlobalServiceManager>();
+#endif
                 if (serviceManager.IsNull())
                 {
                     rootProfile = serviceManager.Manager.ActiveProfile;
